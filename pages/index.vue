@@ -1,72 +1,85 @@
 <template>
   <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        turtle-clicker
-      </h1>
-      <h2 class="subtitle">
-        An idle game based on turtles
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+    <div class="header">
+      <img alt src="~/assets/turtle.png" />
+      <h1>Turtle Clicker</h1>
+      <img alt src="~/assets/turtle.png" />
+    </div>
+    <div class="grid-container">
+      <div class="Farms grid-area">Farms</div>
+      <div class="Turtle grid-area">
+        <h1>Click!</h1>
+        <h2>{{ cookieCount }}</h2>
+        <turtle @click.native="click" ref="turtle" />
       </div>
+      <div class="Upgrades grid-area">Upgrades</div>
+      <div class="Turtles grid-area">Turtles</div>
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import turtle from '~/components/turtle'
 
 export default {
-  components: {
-    Logo
+  data() {
+    return {
+      cookieCount: 0
+    }
+  },
+  components: { turtle },
+  methods: {
+    click() {
+      this.cookieCount++
+    }
   }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
+<style scoped>
+.header {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  max-height: 100px;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.header > img {
+  height: 100px;
+  width: auto;
+  margin: 0 25px 0 25px;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.links {
-  padding-top: 15px;
+.grid-container {
+  display: grid;
+  grid-template-columns: auto 0.7fr 1fr 1fr;
+  grid-template-rows: 0.1fr 1.2fr 1.8fr;
+  grid-template-areas: '. . . .' 'Turtle Status Status Farms' 'Turtles Status Status Farms';
+}
+
+.Farms {
+  grid-area: Farms;
+}
+
+.Turtle {
+  grid-area: Turtle;
+}
+
+.Upgrades {
+  grid-area: Status;
+}
+
+.Turtles {
+  grid-area: Turtles;
+}
+
+.grid-area {
+  border: 1px solid grey;
+  margin: 4px;
+  padding: 10px;
 }
 </style>
