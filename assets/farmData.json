@@ -1,0 +1,18 @@
+{
+    "1": {
+        "name": "Turtle Egg",
+        "description": "Hatches a turtle every second.",
+        "rate": 1,
+        "groupSize": 1,
+        "basePrice": 1,
+        "priceExponent": 1.05
+    },
+    "2": {
+        "name": "Turtle Pond",
+        "description": "Produces baby turtles by the bale.",
+        "rate": 1,
+        "groupSize": 2,
+        "basePrice": 2,
+        "priceExponent": 1.05
+    }
+}

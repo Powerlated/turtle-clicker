@@ -6,31 +6,44 @@
       <img alt src="~/assets/turtle.png" />
     </div>
     <div class="grid-container">
-      <div class="Farms grid-area">Farms</div>
+      <div class="Farms grid-area">
+        <h1>Farms</h1>
+        <h2>Click to buy</h2>
+        <farms />
+      </div>
       <div class="Turtle grid-area">
         <h1>Click!</h1>
-        <h2>{{ cookieCount }}</h2>
-        <turtle @click.native="click" ref="turtle" />
+        <div id="turtle-count">
+          <turtle-icon />
+          <h2>{{ turtleCount }}</h2>
+        </div>
+        <turtle @click.native="click" ref="turtle" id="turtle" />
       </div>
-      <div class="Upgrades grid-area">Upgrades</div>
-      <div class="Turtles grid-area">Turtles</div>
+      <div class="Upgrades grid-area">
+        <h1>Upgrades</h1>
+      </div>
+      <div class="Turtles grid-area">
+        <h1>Turtles</h1>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import turtle from '~/components/turtle'
+import farms from '~/components/farms'
+import TurtleIcon from '~/components/turtle-icon'
 
 export default {
-  data() {
-    return {
-      cookieCount: 0
+  computed: {
+    turtleCount() {
+      return this.$store.state.turtleClicker.turtleCount
     }
   },
-  components: { turtle },
+  components: { turtle, farms, TurtleIcon },
   methods: {
     click() {
-      this.cookieCount++
+      this.$store.commit('turtleClicker/addTurtle', 1)
     }
   }
 }
@@ -41,6 +54,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   max-height: 100px;
 }
 
@@ -57,16 +71,27 @@ export default {
 .grid-container {
   display: grid;
   grid-template-columns: auto 0.7fr 1fr 1fr;
-  grid-template-rows: 0.1fr 1.2fr 1.8fr;
+  grid-template-rows: 0fr 1.2fr 1.8fr;
   grid-template-areas: '. . . .' 'Turtle Status Status Farms' 'Turtles Status Status Farms';
 }
 
-.Farms {
-  grid-area: Farms;
+.grid-area {
+  border: 1px solid grey;
+  margin: 4px;
+  padding: 10px;
 }
 
 .Turtle {
   grid-area: Turtle;
+}
+
+#turtle {
+  transition: all 0.25s ease;
+}
+
+#turtle:active {
+  font-size: 1rem;
+  transform: scale(0.75);
 }
 
 .Upgrades {
@@ -77,9 +102,24 @@ export default {
   grid-area: Turtles;
 }
 
-.grid-area {
-  border: 1px solid grey;
-  margin: 4px;
-  padding: 10px;
+.Farms {
+  grid-area: Farms;
+  padding: 5px;
+}
+</style>
+
+<style scoped>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 8px;
+}
+
+#turtle-count {
+  display: flex;
+  align-items: center;
 }
 </style>
