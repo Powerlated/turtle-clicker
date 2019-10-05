@@ -2,17 +2,28 @@
     "1": {
         "name": "Turtle Egg",
         "description": "Hatches a turtle every second.",
-        "rate": 1,
+        "perTick": 1,
+        "intervalMs": 1000,
         "groupSize": 1,
         "basePrice": 1,
-        "priceExponent": 1.05
+        "priceExponent": 0.10
     },
     "2": {
         "name": "Turtle Pond",
         "description": "Produces baby turtles by the bale.",
-        "rate": 1,
+        "perTick": 2,
+        "intervalMs": 1500,
         "groupSize": 2,
         "basePrice": 2,
-        "priceExponent": 1.05
+        "priceExponent": 0.20
+    },
+    "3": {
+        "name": "Turtle Factory",
+        "description": "Turtles are produced on an assembly line to ensure maximum production rate.",
+        "perTick": 1,
+        "intervalMs": 100,
+        "groupSize": 2,
+        "basePrice": 10,
+        "priceExponent": 0.25
     }
 }

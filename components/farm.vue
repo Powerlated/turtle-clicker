@@ -1,7 +1,10 @@
 <template>
-  <div class="container ripple" :class="{'shake': shake, 'purchasable': $store.state.turtleClicker.turtleCount >= basePrice}">
+  <div
+    class="container ripple"
+    :class="{'shake': shake, 'purchasable': $store.state.turtleClicker.turtleCount >= price}"
+  >
     <div class="farm grid-container" @click="onClick">
-      <h2 class="Index">{{index}}</h2>
+      <h2 :style="{marginTop: 0}" class="Index">{{index}}</h2>
       <div>
         <b class="Amount">{{amount}}</b>
       </div>
@@ -9,7 +12,7 @@
       <h1 class="Name">{{name}}</h1>
       <p class="Price" :style="{fontSize: '20px', display: 'flex', justifyContent: 'center'}">
         <turtle-icon />
-        <b :style="{marginLeft: '6px'}">{{basePrice}}</b>
+        <b :style="{marginLeft: '6px'}">{{price}}</b>
       </p>
     </div>
   </div>
@@ -24,6 +27,13 @@ export default {
       amount: 0
     }
   },
+  computed: {
+    price() {
+      return Math.round(
+        this.basePrice + Math.pow(this.amount * this.priceExponent, 3)
+      )
+    }
+  },
   props: {
     key: String,
     index: String,
@@ -32,18 +42,27 @@ export default {
     rate: Number,
     groupSize: Number,
     basePrice: Number,
-    priceExponent: Number
+    priceExponent: Number,
+    perTick: Number,
+    intervalMs: Number
   },
   methods: {
     onClick() {
-      if ( this.$store.state.turtleClicker.turtleCount >= this.basePrice) {
-        this.$store.commit('turtleClicker/addTurtle', -1 * (this.basePrice))
+      if (this.$store.state.turtleClicker.turtleCount >= this.price) {
+        this.$store.commit('turtleClicker/addTurtle', -Math.round(this.price))
         this.amount++
       }
     }
   },
   components: {
     TurtleIcon
+  },
+  updated() {
+    clearInterval(this.interval)
+    this.interval = setInterval(() => {
+      if (this.amount > 0)
+        this.$store.commit('turtleClicker/addTurtle', this.perTick)
+    }, this.intervalMs / this.amount)
   }
 }
 </script>
@@ -59,35 +78,43 @@ export default {
 
 p {
   margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  margin: 0;
+  margin-bottom: 12px;
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: 0.7fr 2.7fr 0.7fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
 }
 
 .Index {
-  grid-area: 1 / 1 / 2 / 2;
+  grid-area: 1 / 1;
 }
 
 .Amount {
-  grid-area: 1 / 3 / 2 / 5;
+  grid-area: 1 / 3;
   float: right;
 }
 
 .Description {
-  grid-area: 2 / 1 / 3 / 4;
+  grid-area: 3 / 1 / 4 / 4;
 }
 
 .Name {
-  grid-area: 1 / 2 / 2 / 3;
+  grid-area: 2 / 2;
   text-align: center;
 }
 
 .Price {
-  grid-area: 1 / 2 / 2 / 3;
+  grid-area: 1 / 2;
   text-align: center;
+  transform: translateY(-3%);
+  align-items: center;
 }
 
 .ripple {

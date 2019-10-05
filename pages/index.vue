@@ -3,7 +3,6 @@
     <div class="header">
       <img alt src="~/assets/turtle.png" />
       <h1>Turtle Clicker</h1>
-      <img alt src="~/assets/turtle.png" />
     </div>
     <div class="grid-container">
       <div class="Farms grid-area">
@@ -11,19 +10,14 @@
         <h2>Click to buy</h2>
         <farms />
       </div>
+      <div class="Upgrades grid-area"></div>
       <div class="Turtle grid-area">
-        <h1>Click!</h1>
+        <h1 id="clickTitle">Click!</h1>
         <div id="turtle-count">
           <turtle-icon />
           <h2>{{ turtleCount }}</h2>
         </div>
         <turtle @click.native="click" ref="turtle" id="turtle" />
-      </div>
-      <div class="Upgrades grid-area">
-        <h1>Upgrades</h1>
-      </div>
-      <div class="Turtles grid-area">
-        <h1>Turtles</h1>
       </div>
     </div>
   </div>
@@ -50,18 +44,28 @@ export default {
 </script>
 
 <style scoped>
+#clickTitle {
+  font-size: 5em;
+}
+
 .header {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  max-height: 100px;
+  margin: auto;
+  white-space: nowrap;
+  flex-basis: 1;
+  flex-shrink: 1;
 }
 
 .header > img {
-  height: 100px;
+  max-height: 100px;
   width: auto;
-  margin: 0 25px 0 25px;
+}
+
+.header > h1 {
+  font-size: 2em;
 }
 
 .container {
@@ -70,15 +74,27 @@ export default {
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto 0.7fr 1fr 1fr;
-  grid-template-rows: 0fr 1.2fr 1.8fr;
-  grid-template-areas: '. . . .' 'Turtle Status Status Farms' 'Turtles Status Status Farms';
+  grid-template-columns: 1.3fr 0.7fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 'Turtle Farms' 'Upgrades Farms';
+}
+
+.Farms {
+  grid-area: Farms;
+}
+
+.Upgrades {
+  grid-area: Upgrades;
+}
+
+.Turtle {
+  grid-area: Turtle;
 }
 
 .grid-area {
   border: 1px solid grey;
   margin: 4px;
-  padding: 10px;
+  padding: 5%;
 }
 
 .Turtle {
@@ -93,22 +109,9 @@ export default {
   font-size: 1rem;
   transform: scale(0.75);
 }
-
-.Upgrades {
-  grid-area: Status;
-}
-
-.Turtles {
-  grid-area: Turtles;
-}
-
-.Farms {
-  grid-area: Farms;
-  padding: 5px;
-}
 </style>
 
-<style scoped>
+<style>
 h1,
 h2,
 h3,
@@ -116,6 +119,10 @@ h4,
 h5,
 h6 {
   margin: 8px;
+}
+
+html {
+  touch-action: manipulation;
 }
 
 #turtle-count {

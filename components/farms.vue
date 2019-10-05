@@ -10,6 +10,8 @@
         :groupSize="data.groupSize"
         :basePrice="data.basePrice"
         :priceExponent="data.priceExponent"
+        :perTick="data.perTick"
+        :intervalMs="data.intervalMs"
       />
     </div>
   </div>
