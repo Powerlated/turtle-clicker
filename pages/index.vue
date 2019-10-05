@@ -39,13 +39,18 @@ export default {
     click() {
       this.$store.commit('turtleClicker/addTurtle', 1)
     }
+  },
+  head() {
+    return {
+      title: "Turtle Clicker"
+    }
   }
 }
 </script>
 
 <style scoped>
 #clickTitle {
-  font-size: 5em;
+  font-size: 2em;
 }
 
 .header {
